@@ -1,11 +1,9 @@
 #include <iostream>
 #include <time.h>
 
-void matmul_1(double *A, double *B, double *C,
-              std::size_t A_rows,
-              std::size_t A_cols,
-              std::size_t B_rows,
-              std::size_t B_cols)
+void matmul_1(const double *A, const double *B, double *C,
+              const std::size_t A_rows, const std::size_t A_cols,
+              const std::size_t B_rows, const std::size_t B_cols)
 {
     if (A_cols != B_rows)
         return;
@@ -16,11 +14,9 @@ void matmul_1(double *A, double *B, double *C,
                 C[i + B_cols * j] += A[k + A_cols * j] * B[i + B_cols * k];
 }
 
-void matmul_2(double *A, double *B, double *C,
-              std::size_t A_rows,
-              std::size_t A_cols,
-              std::size_t B_rows,
-              std::size_t B_cols)
+void matmul_2(const double *A, const double *B, double *C,
+              const std::size_t A_rows, const std::size_t A_cols,
+              const std::size_t B_rows, const std::size_t B_cols)
 {
     if (A_cols != B_rows)
         return;
@@ -31,11 +27,9 @@ void matmul_2(double *A, double *B, double *C,
                 C[i + B_cols * j] += A[k + A_cols * j] * B[i + B_cols * k];
 }
 
-void matmul_3(double *A, double *B, double *C,
-              std::size_t A_rows,
-              std::size_t A_cols,
-              std::size_t B_rows,
-              std::size_t B_cols)
+void matmul_3(const double *A, const double *B, double *C,
+              const std::size_t A_rows, const std::size_t A_cols,
+              const std::size_t B_rows, const std::size_t B_cols)
 {
     if (A_cols != B_rows)
         return;
@@ -50,9 +44,6 @@ int main(int argc, char const *argv[])
 {
     std::size_t A_rows = 1 << 17, A_cols = 3;
     std::size_t B_rows = 3, B_cols = 2000;
-    // std::vector<double> A(A_rows * A_cols);
-    // std::vector<double> B(B_rows * B_cols);
-    // std::vector<double> C(A_rows * B_cols);
     double *A = new double[A_rows * A_cols];
     double *B = new double[B_rows * B_cols];
     double *C = new double[A_rows * B_cols];
@@ -81,7 +72,8 @@ int main(int argc, char const *argv[])
     printf("matmul_3: %f s\n", time_3);
     printf("matmul_3 speedup: %3.2f %% \n\n", (1.0 - time_3 / time_1) * 100.0);
 
-    delete[] A, B, C;
-
+    delete[] A;
+    delete[] B;
+    delete[] C;
     return 0;
 }
